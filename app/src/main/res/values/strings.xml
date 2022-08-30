@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Deadline Monitor</string>
+    <string name="scan">SCAN</string>
 </resources>
