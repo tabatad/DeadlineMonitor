@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="large_text">40sp</dimen>
+    <dimen name="small_text">20sp</dimen>
+    <dimen name="small_padding">4dp</dimen>
+    <dimen name="bar_view_height">1dp</dimen>
+    <dimen name="large_margin">16dp</dimen>
+    <dimen name="small_margin">8dp</dimen>
+</resources>

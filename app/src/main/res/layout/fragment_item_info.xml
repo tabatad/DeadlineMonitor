@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ItemInfoFragment">
+
+        <ImageButton
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="@string/cancel_button_description"
+            android:padding="@dimen/small_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/black" />
+
+        <EditText
+            android:id="@+id/item_name"
+            style="@style/small_text"
+            android:autofillHints=""
+            android:background="@color/clear"
+            android:hint="@string/item_name_hint"
+            android:textColorHint="#55000000"
+            android:inputType="textMultiLine"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cancel_button"
+            tools:ignore="TextContrastCheck" />
+
+        <TextView
+            android:id="@+id/JANCode"
+            style="@style/small_text"
+            android:text="JAN Code"
+            android:layout_marginEnd="@dimen/small_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/item_name" />
+
+        <View
+            android:id="@+id/bar1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bar_view_height"
+            android:layout_marginTop="@dimen/large_margin"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/JANCode" />
+
+        <TextView
+            android:id="@+id/date_picker_text"
+            style="@style/small_text"
+            android:text="@string/deadline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar1" />
+
+        <DatePicker
+            android:id="@+id/date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_text" />
+
+        <View
+            android:id="@+id/bar2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bar_view_height"
+            android:layout_marginTop="@dimen/large_margin"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date_picker" />
+
+        <TextView
+            android:id="@+id/check_cycle_spinner_text"
+            style="@style/small_text"
+            android:text="@string/check_cycle"
+            app:layout_constraintBottom_toBottomOf="@+id/check_cycle_spinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar2" />
+
+        <Spinner
+            android:id="@+id/check_cycle_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_margin"
+            android:contentDescription="@string/check_cycle_spinner_description"
+            android:minHeight="48dp"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintEnd_toEndOf="@+id/bar2"
+            app:layout_constraintTop_toBottomOf="@+id/bar2" />
+
+        <View
+            android:id="@+id/bar3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bar_view_height"
+            android:layout_marginTop="@dimen/large_margin"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/check_cycle_spinner" />
+
+        <Button
+            android:id="@+id/resister_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/green_button"
+            android:text="@string/register_button"
+            android:textSize="@dimen/large_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar3"
+            tools:ignore="TextContrastCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

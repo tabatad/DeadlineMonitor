@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Deadline Monitor</string>
     <string name="scan">SCAN</string>
+    <string name="register_button">登録</string>
+    <string name="item_name_hint">商品名</string>
+    <string name="check_cycle_spinner_description">期限チェック周期</string>
+    <string name="date_picker_text_hint">タップして期限日を入力</string>
+    <string name="cancel_button_description">キャンセルボタン</string>
+    <string name="check_cycle">チェック周期</string>
+    <string name="deadline">期限日</string>
 </resources>
