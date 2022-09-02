@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.tabata.deadlinemonitor.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_itemInfoFragment"
+            app:destination="@id/itemInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemInfoFragment"
+        android:name="com.tabata.deadlinemonitor.ItemInfoFragment"
+        android:label="ItemInfoFragment"
+        tools:layout="@layout/fragment_item_info"/>
 </navigation>
