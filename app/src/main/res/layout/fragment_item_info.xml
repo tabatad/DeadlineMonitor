@@ -33,9 +33,8 @@
             tools:ignore="TextContrastCheck" />
 
         <TextView
-            android:id="@+id/JANCode"
+            android:id="@+id/jan_code"
             style="@style/small_text"
-            android:text="JAN Code"
             android:layout_marginEnd="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_name" />
@@ -48,7 +47,7 @@
             android:background="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/JANCode" />
+            app:layout_constraintTop_toBottomOf="@+id/jan_code" />
 
         <TextView
             android:id="@+id/date_picker_text"

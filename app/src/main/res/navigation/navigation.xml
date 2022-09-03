@@ -18,5 +18,10 @@
         android:id="@+id/itemInfoFragment"
         android:name="com.tabata.deadlinemonitor.ItemInfoFragment"
         android:label="ItemInfoFragment"
-        tools:layout="@layout/fragment_item_info"/>
+        tools:layout="@layout/fragment_item_info">
+
+        <argument
+            android:name="jan_code"
+            app:argType="string" />
+    </fragment>
 </navigation>
