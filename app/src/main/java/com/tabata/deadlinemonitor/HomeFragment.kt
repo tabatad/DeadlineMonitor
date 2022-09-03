@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
 
         binding.goItemInfoButton.setOnClickListener { view: View ->
             view.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToItemInfoFragment())
+                .navigate(HomeFragmentDirections.actionHomeFragmentToItemInfoFragment("sample"))
         }
 
         return binding.root
@@ -46,13 +46,9 @@ class HomeFragment : Fragment() {
         ScanContract()
     ) { result: ScanIntentResult ->
         if (result.contents != null) {
-            val builder =
-                AlertDialog.Builder(requireContext())
-            builder.setTitle("Result")
-            builder.setMessage(result.contents)
-            builder.setPositiveButton(
-                "OK"
-            ) { dialogInterface, _ -> dialogInterface.dismiss() }.show()
+            val janCode = result.contents
+            findNavController()
+                .navigate(HomeFragmentDirections.actionHomeFragmentToItemInfoFragment(janCode))
         }
     }
 }

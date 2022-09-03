@@ -10,11 +10,12 @@ import android.widget.DatePicker
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.tabata.deadlinemonitor.databinding.FragmentItemInfoBinding
-import java.util.*
 
 class ItemInfoFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
+    private val args: ItemInfoFragmentArgs by navArgs()
     private lateinit var dataPickerText: TextView
 
     override fun onCreateView(
@@ -26,11 +27,7 @@ class ItemInfoFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             inflater, R.layout.fragment_item_info, container, false
         )
 
-//        dataPickerText = binding.datePickerText
-//
-//        binding.datePickerText.setOnClickListener {
-//            showDatePickerDialog()
-//        }
+        binding.janCode.text = args.janCode
 
         val spinnerItems = (1..12).toList()
         val adapter = ArrayAdapter(
@@ -41,23 +38,6 @@ class ItemInfoFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding.checkCycleSpinner.adapter = adapter
 
         return binding.root
-    }
-
-    private fun showDatePickerDialog() {
-        val calendar: Calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val context = context
-
-        if (context != null) {
-            DatePickerDialog(
-                context,
-                this,
-                year, month, day
-            ).show()
-        }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, day: Int) {
