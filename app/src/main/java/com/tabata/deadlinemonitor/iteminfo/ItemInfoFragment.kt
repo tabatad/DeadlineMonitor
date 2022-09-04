@@ -81,9 +81,14 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         // insert後に実行
         itemInfoViewModel.registerEvent.observe(viewLifecycleOwner) {
             if (it == true) {
+                val text: String = if (itemInfoViewModel.isInsertComplete) {
+                    "登録完了"
+                } else {
+                    "重複するデータです"
+                }
                 Snackbar.make(
                     requireActivity().findViewById(android.R.id.content),
-                    "登録完了",
+                    text,
                     Snackbar.LENGTH_SHORT
                 ).show()
 

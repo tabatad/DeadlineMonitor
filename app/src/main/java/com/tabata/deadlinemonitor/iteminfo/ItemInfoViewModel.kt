@@ -1,6 +1,8 @@
 package com.tabata.deadlinemonitor.iteminfo
 
 import android.app.Application
+import android.database.sqlite.SQLiteConstraintException
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +23,8 @@ class ItemInfoViewModel(
     var deadlineDate = Date()
     var checkCycle = -1
 
+    var isInsertComplete = false
+
     private val _registerEvent = MutableLiveData<Boolean>()
     val registerEvent: LiveData<Boolean>
         get() = _registerEvent
@@ -40,7 +44,12 @@ class ItemInfoViewModel(
     }
 
     private suspend fun insert(itemInfo: ItemInfo) {
-        database.insert(itemInfo)
+        try {
+            database.insert(itemInfo)
+            isInsertComplete = true
+        } catch(e: SQLiteConstraintException) {
+            Log.i("itemInfoViewModel", "$e")
+        }
     }
 
     fun onClear() {
