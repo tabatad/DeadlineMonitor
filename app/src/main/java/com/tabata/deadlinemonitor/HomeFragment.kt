@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -24,11 +23,6 @@ class HomeFragment : Fragment() {
 
         binding.scanButton.setOnClickListener {
             scanCode()
-        }
-
-        binding.goItemInfoButton.setOnClickListener { view: View ->
-            view.findNavController()
-                .navigate(HomeFragmentDirections.actionHomeFragmentToItemInfoFragment("sample"))
         }
 
         return binding.root

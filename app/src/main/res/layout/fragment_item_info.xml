@@ -3,10 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="itemInfoViewModel"
+            type="com.tabata.deadlinemonitor.iteminfo.ItemInfoViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ItemInfoFragment">
+        tools:context=".iteminfo.ItemInfoFragment">
 
         <ImageButton
             android:id="@+id/cancel_button"
@@ -25,16 +31,18 @@
             style="@style/small_text"
             android:autofillHints=""
             android:background="@color/clear"
+            android:text="@={itemInfoViewModel.itemName}"
             android:hint="@string/item_name_hint"
-            android:textColorHint="#55000000"
             android:inputType="textMultiLine"
+            android:textColorHint="#55000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cancel_button"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/jan_code"
             style="@style/small_text"
+            android:text="@={itemInfoViewModel.janCode}"
             android:layout_marginEnd="@dimen/small_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_name" />
@@ -106,7 +114,7 @@
             app:layout_constraintTop_toBottomOf="@+id/check_cycle_spinner" />
 
         <Button
-            android:id="@+id/resister_button"
+            android:id="@+id/register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green_button"
@@ -116,7 +124,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar3"
+            android:onClick="@{() -> itemInfoViewModel.onRegister()}"
             tools:ignore="TextContrastCheck" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> itemInfoViewModel.onClear()}"
+            android:text="Clear"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
