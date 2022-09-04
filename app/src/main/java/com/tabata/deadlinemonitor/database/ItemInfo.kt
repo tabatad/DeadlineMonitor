@@ -9,14 +9,14 @@ import java.util.Date
 data class ItemInfo(
     @PrimaryKey
     @ColumnInfo(name = "jan_code")
-    val janCode: String,
+    val janCode: String = "",
 
     @ColumnInfo(name = "item_name")
-    val itemName: String,
+    val itemName: String = "",
 
     @ColumnInfo(name = "deadline_date")
-    val deadlineDate: Date?,
+    val deadlineDate: Date? = Date(),
 
     @ColumnInfo(name = "check_cycle")
-    val checkCycle: Int
+    val checkCycle: Int = -1
 )
