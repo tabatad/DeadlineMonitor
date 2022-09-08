@@ -8,18 +8,20 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
-import com.tabata.deadlinemonitor.R
 import com.tabata.deadlinemonitor.database.ItemInfoDatabase
 import com.tabata.deadlinemonitor.databinding.FragmentItemInfoBinding
+import timber.log.Timber
 import java.util.*
 
 class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
+
+    private var _binding: FragmentItemInfoBinding? = null
+    private val binding get() = _binding!!
 
     private val args: ItemInfoFragmentArgs by navArgs()
     lateinit var itemInfoViewModel: ItemInfoViewModel
@@ -30,10 +32,9 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
     ): View {
 
         // binding設定
-        val binding: FragmentItemInfoBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_item_info, container, false
-        )
+        _binding = FragmentItemInfoBinding.inflate(inflater, container, false)
 
+        // DB, ViewModel, Lifecycle設定
         val application = requireNotNull(this.activity).application
         val dataSource = ItemInfoDatabase.getInstance(application).itemInfoDao
         val viewModelFactory = ItemInfoViewModelFactory(dataSource, application)
@@ -46,12 +47,22 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         // スキャンしたJANの表示
         itemInfoViewModel.janCode.value = args.janCode
 
+        // JANの重複確認
+        itemInfoViewModel.isEntityDuplicate(args.janCode)
+
+        itemInfoViewModel.isExist.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.registerButton.text = "更新"
+            } else {
+                binding.registerButton.text = "登録"
+            }
+        }
+
         // スピナーの設定
-        val spinnerItems = (1..12).toList()
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
-            spinnerItems
+            (1..12).toList()
         )
         binding.checkCycleSpinner.adapter = adapter
 
@@ -78,14 +89,14 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         }
 
         // 登録ボタンのオブザーバー
-        // insert後に実行
         itemInfoViewModel.registerEvent.observe(viewLifecycleOwner) {
             if (it == true) {
-                val text: String = if (itemInfoViewModel.isInsertComplete) {
-                    "登録完了"
+                val text = if (itemInfoViewModel.isExist.value == true) {
+                    "更新完了"
                 } else {
-                    "重複するデータです"
+                    "登録完了"
                 }
+
                 Snackbar.make(
                     requireActivity().findViewById(android.R.id.content),
                     text,
@@ -98,7 +109,6 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                 itemInfoViewModel.doneRegister()
             }
         }
-
         return binding.root
     }
 
@@ -107,5 +117,10 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         itemInfoViewModel.deadlineDate = calendar.time
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
