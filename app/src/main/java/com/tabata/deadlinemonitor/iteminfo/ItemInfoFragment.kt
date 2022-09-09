@@ -15,7 +15,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.tabata.deadlinemonitor.database.ItemInfoDatabase
 import com.tabata.deadlinemonitor.databinding.FragmentItemInfoBinding
-import timber.log.Timber
 import java.util.*
 
 class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
@@ -50,8 +49,22 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         // JANの重複確認
         itemInfoViewModel.isEntityDuplicate(args.janCode)
 
+        // 重複の有無で商品情報画面を変更
         itemInfoViewModel.isExist.observe(viewLifecycleOwner) {
             if (it) {
+                val itemInfo = itemInfoViewModel.itemInfo.value
+                if (itemInfo != null) {
+                    binding.itemName.setText(itemInfo.itemName)
+
+                    val calendar = Calendar.getInstance()
+                    calendar.time = itemInfo.deadlineDate!!
+                    val year = calendar.get(Calendar.YEAR)
+                    val month = calendar.get(Calendar.MONTH)
+                    val day = calendar.get(Calendar.DAY_OF_MONTH)
+                    binding.datePicker.init(year, month, day, this)
+
+                    binding.checkCycleSpinner.setSelection(itemInfo.checkCycle - 1)
+                }
                 binding.registerButton.text = "更新"
             } else {
                 binding.registerButton.text = "登録"

@@ -15,7 +15,6 @@ class ItemInfoViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    lateinit var itemInfo: ItemInfo
     val janCode = MutableLiveData<String>()
     val itemName = MutableLiveData<String>()
     var deadlineDate = Date()
@@ -29,10 +28,14 @@ class ItemInfoViewModel(
     val isExist: LiveData<Boolean>
         get() = _isExist
 
+    private val _itemInfo = MutableLiveData<ItemInfo>()
+    val itemInfo: LiveData<ItemInfo>
+        get() = _itemInfo
+
     // 登録ボタンがタップされると実行
     fun onRegister() {
         viewModelScope.launch {
-            itemInfo = ItemInfo(
+            _itemInfo.value = ItemInfo(
                 janCode.value.toString(),
                 itemName.value.toString(),
                 deadlineDate,
@@ -40,10 +43,10 @@ class ItemInfoViewModel(
             )
             if (_isExist.value == true) {
                 // 重複するエンティティがあるとき
-                update(itemInfo)
+                update(_itemInfo.value!!)
             } else {
                 // 重複するエンティティがないとき
-                insert(itemInfo)
+                insert(_itemInfo.value!!)
             }
             _registerEvent.value = true
         }
@@ -51,8 +54,8 @@ class ItemInfoViewModel(
 
     fun isEntityDuplicate(janCode: String) {
         viewModelScope.launch {
-            val itemInfo = getItemInfo(janCode)
-            _isExist.value = itemInfo != null
+            _itemInfo.value = getItemInfo(janCode)
+            _isExist.value = _itemInfo.value != null
         }
     }
 
