@@ -19,6 +19,7 @@ class ItemInfoViewModel(
     val itemName = MutableLiveData<String>()
     var deadlineDate = Date()
     var checkCycle = -1
+    var nextCheckDate: Calendar = Calendar.getInstance()
 
     private val _registerEvent = MutableLiveData<Boolean>()
     val registerEvent: LiveData<Boolean>
@@ -35,11 +36,15 @@ class ItemInfoViewModel(
     // 登録ボタンがタップされると実行
     fun onRegister() {
         viewModelScope.launch {
+            nextCheckDate.time = deadlineDate
+            nextCheckDate.add(Calendar.MONTH, -checkCycle)
+
             _itemInfo.value = ItemInfo(
                 janCode.value.toString(),
                 itemName.value.toString(),
                 deadlineDate,
-                checkCycle
+                checkCycle,
+                nextCheckDate.time
             )
             if (_isExist.value == true) {
                 // 重複するエンティティがあるとき

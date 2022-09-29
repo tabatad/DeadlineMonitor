@@ -23,7 +23,7 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
     private val binding get() = _binding!!
 
     private val args: ItemInfoFragmentArgs by navArgs()
-    lateinit var itemInfoViewModel: ItemInfoViewModel
+    private lateinit var itemInfoViewModel: ItemInfoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

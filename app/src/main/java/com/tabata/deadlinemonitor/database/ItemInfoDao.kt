@@ -18,4 +18,7 @@ interface ItemInfoDao {
 
     @Query("SELECT * FROM item_info_table WHERE jan_code = :janCode LIMIT 1")
     suspend fun getItemInfo(janCode: String): ItemInfo?
+
+    @Query("SELECT * FROM item_info_table WHERE next_check_date < CAST((julianday('now') - 2440587.5)*86400000 AS INTEGER)")
+    suspend fun getCheckItemList(): List<ItemInfo>
 }
