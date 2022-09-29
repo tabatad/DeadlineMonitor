@@ -8,4 +8,6 @@
     <string name="cancel_button_description">キャンセルボタン</string>
     <string name="check_cycle">チェック周期</string>
     <string name="deadline">期限日</string>
+    <string name="home_title_text">期限チェック対象リスト</string>
+    <string name="deadline_date">期限日</string>
 </resources>

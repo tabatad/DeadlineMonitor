@@ -18,5 +18,8 @@ data class ItemInfo(
     val deadlineDate: Date? = Date(),
 
     @ColumnInfo(name = "check_cycle")
-    val checkCycle: Int = -1
+    val checkCycle: Int = -1,
+
+    @ColumnInfo(name = "next_check_date")
+    val nextCheckDate: Date? = Date()
 )
