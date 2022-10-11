@@ -122,6 +122,14 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                 itemInfoViewModel.doneRegister()
             }
         }
+
+        binding.cancelButton.setOnClickListener {
+            findNavController()
+                .navigate(
+                    ItemInfoFragmentDirections
+                        .actionItemInfoFragmentToHomeFragment()
+                )
+        }
         return binding.root
     }
 
