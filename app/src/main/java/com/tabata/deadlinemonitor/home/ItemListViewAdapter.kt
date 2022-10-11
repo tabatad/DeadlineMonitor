@@ -13,6 +13,16 @@ import java.util.Locale
 class ItemListViewAdapter(private val dataSet: List<ItemInfo>) :
     RecyclerView.Adapter<ItemListViewAdapter.ViewHolder>() {
 
+    private lateinit var listener: OnItemCellClickListener
+
+    interface OnItemCellClickListener {
+        fun onItemClick(itemInfo: ItemInfo)
+    }
+
+    fun setOnItemCellClickListener(listener: OnItemCellClickListener) {
+        this.listener = listener
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName: TextView
         val janCode: TextView
@@ -39,6 +49,10 @@ class ItemListViewAdapter(private val dataSet: List<ItemInfo>) :
             "yyyy/MM/dd",
             Locale.getDefault()
         ).format(dataSet[position].deadlineDate!!)
+
+        viewHolder.itemView.setOnClickListener {
+            listener.onItemClick(dataSet[position])
+        }
     }
 
     override fun getItemCount() = dataSet.size

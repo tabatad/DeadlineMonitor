@@ -13,6 +13,7 @@ import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import com.tabata.deadlinemonitor.MyCaptureActivity
+import com.tabata.deadlinemonitor.database.ItemInfo
 import com.tabata.deadlinemonitor.database.ItemInfoDatabase
 import com.tabata.deadlinemonitor.databinding.FragmentHomeBinding
 
@@ -58,6 +59,19 @@ class HomeFragment : Fragment() {
             val dataSet = homeViewModel.dataSet.value
             val itemListViewAdapter = ItemListViewAdapter(dataSet!!)
             itemListView.adapter = itemListViewAdapter
+
+            // アイテムリストのセルのリスナー
+            itemListViewAdapter.setOnItemCellClickListener(
+                object : ItemListViewAdapter.OnItemCellClickListener {
+                    override fun onItemClick(itemInfo: ItemInfo) {
+                        findNavController()
+                            .navigate(
+                                HomeFragmentDirections
+                                    .actionHomeFragmentToItemInfoFragment(itemInfo.janCode)
+                            )
+                    }
+                }
+            )
         }
 
         return binding.root
