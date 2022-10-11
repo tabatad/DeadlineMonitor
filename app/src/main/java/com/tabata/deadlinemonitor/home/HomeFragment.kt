@@ -79,9 +79,14 @@ class HomeFragment : Fragment() {
 
     private fun scanCode() {
         val options = ScanOptions()
-        options.setBeepEnabled(true)
         options.captureActivity = MyCaptureActivity::class.java
-        options.setOrientationLocked(false)
+
+        // スキャン時にビープ音を鳴らす
+        options.setBeepEnabled(true)
+        // 13桁,8桁のJAN(EAN)コードのみスキャンする
+        options.setDesiredBarcodeFormats(ScanOptions.EAN_13,ScanOptions.EAN_8)
+        // スキャン画面下の説明
+        options.setPrompt("赤い線をバーコードに合わせてください")
         barLauncher.launch(options)
     }
 
