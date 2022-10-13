@@ -23,7 +23,7 @@
             android:padding="@dimen/small_padding"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+            app:srcCompat="@android:drawable/ic_menu_revert"
             app:tint="@color/black" />
 
         <EditText
@@ -118,14 +118,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/green_button"
-            android:text="@string/register_button"
+            android:onClick="@{() -> itemInfoViewModel.onRegister()}"
             android:textSize="@dimen/large_text"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/delete_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar3"
-            android:onClick="@{() -> itemInfoViewModel.onRegister()}"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"
+            tools:text="@string/register_button"/>
 
         <Button
             android:id="@+id/button"
@@ -133,10 +133,20 @@
             android:layout_height="wrap_content"
             android:onClick="@{() -> itemInfoViewModel.onClear()}"
             android:text="Clear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_button"
+            android:backgroundTint="@color/red"
+            android:textSize="@dimen/small_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

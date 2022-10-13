@@ -1,5 +1,7 @@
 package com.tabata.deadlinemonitor.iteminfo
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.tabata.deadlinemonitor.R
 import com.tabata.deadlinemonitor.database.ItemInfoDatabase
 import com.tabata.deadlinemonitor.databinding.FragmentItemInfoBinding
 import java.util.*
@@ -121,6 +124,26 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                 )
                 itemInfoViewModel.doneRegister()
             }
+        }
+
+        binding.deleteButton.setOnClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("商品情報の削除")
+                .setMessage("削除したデータは2度と戻りません\n本当に削除してもよろしいですか？")
+                .setIcon(R.drawable.ic_warning_icon)
+                .setPositiveButton("削除") { _, _ ->
+                    // OKを押したときの処理を書く
+                    itemInfoViewModel.delete(itemInfoViewModel.itemInfo.value!!)
+                    findNavController()
+                        .navigate(
+                            ItemInfoFragmentDirections
+                                .actionItemInfoFragmentToHomeFragment()
+                        )
+                }
+                .setNegativeButton("キャンセル") { _, _ ->
+                    // Cancelを押したときの処理を書く
+                }
+                .show()
         }
 
         binding.cancelButton.setOnClickListener {
