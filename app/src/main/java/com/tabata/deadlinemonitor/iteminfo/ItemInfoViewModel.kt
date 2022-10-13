@@ -1,6 +1,8 @@
 package com.tabata.deadlinemonitor.iteminfo
 
+import android.app.AlertDialog
 import android.app.Application
+import android.provider.SyncStateContract.Helpers.update
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -61,6 +63,12 @@ class ItemInfoViewModel(
         viewModelScope.launch {
             _itemInfo.value = getItemInfo(janCode)
             _isExist.value = _itemInfo.value != null
+        }
+    }
+
+    fun delete(itemInfo: ItemInfo) {
+        viewModelScope.launch {
+            database.delete(itemInfo)
         }
     }
 

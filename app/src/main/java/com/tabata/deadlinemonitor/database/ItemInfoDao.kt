@@ -1,9 +1,6 @@
 package com.tabata.deadlinemonitor.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
 @Dao
 interface ItemInfoDao {
@@ -12,6 +9,9 @@ interface ItemInfoDao {
 
     @Update
     suspend fun update(itemInfo: ItemInfo)
+
+    @Delete
+    suspend fun delete(itemInfo: ItemInfo)
 
     @Query("DELETE FROM item_info_table")
     suspend fun clear()
