@@ -107,18 +107,6 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         // 登録ボタンのオブザーバー
         itemInfoViewModel.registerEvent.observe(viewLifecycleOwner) {
             if (it == true) {
-                val text = if (itemInfoViewModel.isExist.value == true) {
-                    "更新完了"
-                } else {
-                    "登録完了"
-                }
-
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    text,
-                    Snackbar.LENGTH_SHORT
-                ).show()
-
                 this.findNavController().navigate(
                     ItemInfoFragmentDirections.actionItemInfoFragmentToHomeFragment()
                 )

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -51,8 +50,6 @@ class HomeFragment : Fragment() {
         homeViewModel.updateCheckItemList()
         val itemListView = binding.itemListView
         itemListView.layoutManager = LinearLayoutManager(requireContext())
-        val itemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        itemListView.addItemDecoration(itemDecoration)
 
         // アイテムリストのオブザーバー
         homeViewModel.dataSet.observe(viewLifecycleOwner) {

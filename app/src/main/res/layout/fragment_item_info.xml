@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="itemInfoViewModel"
             type="com.tabata.deadlinemonitor.iteminfo.ItemInfoViewModel" />
@@ -21,19 +22,30 @@
             android:background="@null"
             android:contentDescription="@string/cancel_button_description"
             android:padding="@dimen/small_padding"
+            android:src="@drawable/back_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_revert"
             app:tint="@color/black" />
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="@dimen/small_padding"
+            android:src="@drawable/delete_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
         <EditText
             android:id="@+id/item_name"
             style="@style/small_text"
             android:autofillHints=""
             android:background="@color/clear"
-            android:text="@={itemInfoViewModel.itemName}"
             android:hint="@string/item_name_hint"
             android:inputType="textMultiLine"
+            android:text="@={itemInfoViewModel.itemName}"
             android:textColorHint="#55000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cancel_button"
@@ -42,10 +54,11 @@
         <TextView
             android:id="@+id/jan_code"
             style="@style/small_text"
-            android:text="@={itemInfoViewModel.janCode}"
             android:layout_marginEnd="@dimen/small_margin"
+            android:text="@={itemInfoViewModel.janCode}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/item_name" />
+            app:layout_constraintTop_toBottomOf="@+id/item_name"
+            tools:text="4900000000000" />
 
         <View
             android:id="@+id/bar1"
@@ -100,7 +113,16 @@
             android:contentDescription="@string/check_cycle_spinner_description"
             android:minHeight="48dp"
             android:textSize="@dimen/small_text"
-            app:layout_constraintEnd_toEndOf="@+id/bar2"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/bar2" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/small_text"
+            android:layout_marginTop="@dimen/large_margin"
+            android:text="@string/cycle_month"
+            app:layout_constraintBottom_toBottomOf="@+id/check_cycle_spinner"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar2" />
 
         <View
@@ -115,38 +137,30 @@
 
         <Button
             android:id="@+id/register_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green_button"
+            android:layout_margin="@dimen/small_margin"
+            android:background="@drawable/button_round"
             android:onClick="@{() -> itemInfoViewModel.onRegister()}"
-            android:textSize="@dimen/large_text"
-            app:layout_constraintBottom_toTopOf="@+id/delete_button"
+            android:textSize="@dimen/small_text"
+            app:backgroundTint="@color/register_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bar3"
             tools:ignore="TextContrastCheck"
-            tools:text="@string/register_button"/>
+            tools:text="@string/register_button" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="128dp"
             android:onClick="@{() -> itemInfoViewModel.onClear()}"
             android:text="Clear"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_button"
-            android:backgroundTint="@color/red"
-            android:textSize="@dimen/small_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
