@@ -22,22 +22,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageButton
             android:id="@+id/scan_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/large_margin"
-            android:text="@string/scan"
-            android:textSize="@dimen/large_text"
+            android:layout_width="@dimen/circle_button_size"
+            android:layout_height="@dimen/circle_button_size"
+            android:layout_marginBottom="@dimen/small_margin"
+            android:background="@drawable/button_circle"
+            android:src="@drawable/camera_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/item_list_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/large_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginBottom="@dimen/large_margin"
             app:layout_constraintBottom_toTopOf="@+id/scan_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/home_title" />
