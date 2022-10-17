@@ -67,6 +67,8 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                     binding.datePicker.init(year, month, day, this)
 
                     binding.checkCycleSpinner.setSelection(itemInfo.checkCycle - 1)
+
+                    itemInfoViewModel.deadlineDate = calendar.time
                 }
                 binding.registerButton.text = "更新"
             } else {
