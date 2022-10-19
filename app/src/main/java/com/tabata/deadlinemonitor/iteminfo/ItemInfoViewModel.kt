@@ -39,6 +39,9 @@ class ItemInfoViewModel(
         viewModelScope.launch {
             nextCheckDate.time = deadlineDate
             nextCheckDate.add(Calendar.MONTH, -checkCycle)
+            if (isChecked == 1) {
+                nextCheckDate.add(Calendar.MONTH, -1)
+            }
 
             _itemInfo.value = ItemInfo(
                 janCode.value.toString(),
