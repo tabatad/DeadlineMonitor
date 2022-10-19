@@ -12,4 +12,5 @@
     <string name="deadline_date">期限日</string>
     <string name="delete_button">削除</string>
     <string name="cycle_month">カ月</string>
+    <string name="year_month_switch">年月表記</string>
 </resources>
