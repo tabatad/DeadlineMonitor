@@ -1,7 +1,6 @@
 package com.tabata.deadlinemonitor.iteminfo
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,17 +9,17 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.NumberPicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.snackbar.Snackbar
 import com.tabata.deadlinemonitor.R
 import com.tabata.deadlinemonitor.database.ItemInfoDatabase
 import com.tabata.deadlinemonitor.databinding.FragmentItemInfoBinding
 import java.util.*
 
-class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
+class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPicker.OnValueChangeListener {
 
     private var _binding: FragmentItemInfoBinding? = null
     private val binding get() = _binding!!
@@ -65,6 +64,12 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                     val month = calendar.get(Calendar.MONTH)
                     val day = calendar.get(Calendar.DAY_OF_MONTH)
                     binding.datePicker.init(year, month, day, this)
+                    binding.yearPicker.value = year
+                    binding.monthPicker.value = month + 1
+
+                    if (itemInfo.isChecked == 1) {
+                        binding.pickerSwitch.isChecked = true
+                    }
 
                     binding.checkCycleSpinner.setSelection(itemInfo.checkCycle - 1)
 
@@ -72,6 +77,11 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
                 }
                 binding.registerButton.text = "更新"
             } else {
+                // 年月のPickerの初期値設定
+                val calendar = Calendar.getInstance()
+                binding.yearPicker.value = calendar.get(Calendar.YEAR)
+                binding.monthPicker.value = calendar.get(Calendar.MONTH) + 1
+
                 binding.registerButton.text = "登録"
             }
         }
@@ -104,6 +114,32 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
         // DatePickerのリスナーの設定
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             binding.datePicker.setOnDateChangedListener(this)
+        }
+
+        // 年月のみのPickerの設定
+        binding.yearPicker.let {
+            it.maxValue = 2100
+            it.minValue = 1900
+            it.setOnValueChangedListener(this)
+        }
+        binding.monthPicker.let {
+            it.maxValue = 12
+            it.minValue = 1
+            it.setOnValueChangedListener(this)
+        }
+
+        // Pickerの取得モード変更スイッチの設定
+        val switch = binding.pickerSwitch
+        switch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.datePicker.visibility = View.INVISIBLE
+                binding.monthYearPicker.visibility = View.VISIBLE
+                itemInfoViewModel.onCheck()
+            } else {
+                binding.datePicker.visibility = View.VISIBLE
+                binding.monthYearPicker.visibility = View.INVISIBLE
+                itemInfoViewModel.offCheck()
+            }
         }
 
         // 登録ボタンのオブザーバー
@@ -156,5 +192,23 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onValueChange(picker: NumberPicker?, old: Int, new: Int) {
+        if (picker == binding.monthPicker) {
+            if (old == 12 && new == 1) {
+                binding.yearPicker.value += 1
+            }
+            if (old == 1 && new == 12) {
+                binding.yearPicker.value -= 1
+            }
+        }
+
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, binding.yearPicker.value)
+        calendar.set(Calendar.MONTH, binding.monthPicker.value - 1)
+        val lastDayOfMonth = calendar.getActualMaximum(Calendar.DATE)   // 月末の日付を取得
+        calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
+        itemInfoViewModel.deadlineDate = calendar.time
     }
 }

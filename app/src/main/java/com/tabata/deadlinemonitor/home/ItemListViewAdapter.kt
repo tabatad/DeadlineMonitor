@@ -45,10 +45,18 @@ class ItemListViewAdapter(private val dataSet: List<ItemInfo>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.itemName.text = dataSet[position].itemName
         viewHolder.janCode.text = dataSet[position].janCode
-        viewHolder.deadlineDate.text = SimpleDateFormat(
-            "yyyy/MM/dd",
-            Locale.getDefault()
-        ).format(dataSet[position].deadlineDate!!)
+
+        if (dataSet[position].isChecked == 1) {
+            viewHolder.deadlineDate.text = SimpleDateFormat(
+                "yyyy/MM",
+                Locale.getDefault()
+            ).format(dataSet[position].deadlineDate!!)
+        } else {
+            viewHolder.deadlineDate.text = SimpleDateFormat(
+                "yyyy/MM/dd",
+                Locale.getDefault()
+            ).format(dataSet[position].deadlineDate!!)
+        }
 
         viewHolder.itemView.setOnClickListener {
             listener.onItemClick(dataSet[position])

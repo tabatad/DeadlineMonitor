@@ -1,8 +1,6 @@
 package com.tabata.deadlinemonitor.iteminfo
 
-import android.app.AlertDialog
 import android.app.Application
-import android.provider.SyncStateContract.Helpers.update
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +20,7 @@ class ItemInfoViewModel(
     var deadlineDate = Date()
     var checkCycle = -1
     var nextCheckDate: Calendar = Calendar.getInstance()
+    var isChecked = 0
 
     private val _registerEvent = MutableLiveData<Boolean>()
     val registerEvent: LiveData<Boolean>
@@ -46,7 +45,8 @@ class ItemInfoViewModel(
                 itemName.value.toString(),
                 deadlineDate,
                 checkCycle,
-                nextCheckDate.time
+                nextCheckDate.time,
+                isChecked
             )
             if (_isExist.value == true) {
                 // 重複するエンティティがあるとき
@@ -96,5 +96,13 @@ class ItemInfoViewModel(
 
     fun doneRegister() {
         _registerEvent.value = false
+    }
+
+    fun onCheck() {
+         isChecked = 1
+    }
+
+    fun offCheck() {
+        isChecked = 0
     }
 }

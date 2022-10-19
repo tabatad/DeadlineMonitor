@@ -21,5 +21,8 @@ data class ItemInfo(
     val checkCycle: Int = -1,
 
     @ColumnInfo(name = "next_check_date")
-    val nextCheckDate: Date? = Date()
+    val nextCheckDate: Date? = Date(),
+
+    @ColumnInfo(name = "is_checked")
+    val isChecked: Int = 0
 )
