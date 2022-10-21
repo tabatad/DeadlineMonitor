@@ -10,7 +10,8 @@ class Converters {
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
+    fun dateToTimestamp(date: Date?): Long {
+        val day = 1000 * 60 * 60 * 24
+        return date!!.time - (date.time % day)
     }
 }

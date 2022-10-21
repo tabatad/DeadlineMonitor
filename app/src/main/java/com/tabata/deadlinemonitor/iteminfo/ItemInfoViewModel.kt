@@ -37,10 +37,20 @@ class ItemInfoViewModel(
     // 登録ボタンがタップされると実行
     fun onRegister() {
         viewModelScope.launch {
-            nextCheckDate.time = deadlineDate
-            nextCheckDate.add(Calendar.MONTH, -checkCycle)
             if (isChecked == 1) {
-                nextCheckDate.add(Calendar.MONTH, -1)
+                val calendar = Calendar.getInstance()
+                calendar.time = deadlineDate
+                val lastDayOfMonth = calendar.getActualMaximum(Calendar.DATE)
+                calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
+                deadlineDate = calendar.time
+
+                nextCheckDate.time = deadlineDate
+                nextCheckDate.add(Calendar.MONTH, -checkCycle)
+                val firstDayOfMonth = calendar.getActualMinimum(Calendar.DATE)
+                nextCheckDate.set(Calendar.DAY_OF_MONTH, firstDayOfMonth)
+            } else {
+                nextCheckDate.time = deadlineDate
+                nextCheckDate.add(Calendar.MONTH, -checkCycle)
             }
 
             _itemInfo.value = ItemInfo(
