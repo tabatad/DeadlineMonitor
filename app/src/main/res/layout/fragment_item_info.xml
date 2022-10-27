@@ -185,17 +185,5 @@
             tools:ignore="TextContrastCheck"
             tools:text="@string/register_button" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="128dp"
-            android:onClick="@{() -> itemInfoViewModel.onClear()}"
-            android:text="Clear"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="HardcodedText" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
