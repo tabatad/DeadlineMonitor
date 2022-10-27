@@ -97,16 +97,6 @@ class ItemInfoViewModel(
         return database.getItemInfo(janCode)
     }
 
-    fun onClear() {
-        viewModelScope.launch {
-            clear()
-        }
-    }
-
-    private suspend fun clear() {
-        database.clear()
-    }
-
     fun doneRegister() {
         _registerEvent.value = false
     }
