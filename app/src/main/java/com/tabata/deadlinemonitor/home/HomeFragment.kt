@@ -18,24 +18,19 @@ import com.tabata.deadlinemonitor.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    private lateinit var homeViewModel: HomeViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
         // binding設定
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // DB, ViewModel, Lifecycle設定
         val application = requireNotNull(this.activity).application
         val dataSource = ItemInfoDatabase.getInstance(application).itemInfoDao
         val viewModelFactory = HomeViewModelFactory(dataSource, application)
-        homeViewModel = ViewModelProvider(
+        val homeViewModel = ViewModelProvider(
             this, viewModelFactory
         )[HomeViewModel::class.java]
         binding.homeViewModel = homeViewModel
@@ -61,11 +56,10 @@ class HomeFragment : Fragment() {
             itemListViewAdapter.setOnItemCellClickListener(
                 object : ItemListViewAdapter.OnItemCellClickListener {
                     override fun onItemClick(itemInfo: ItemInfo) {
-                        findNavController()
-                            .navigate(
-                                HomeFragmentDirections
-                                    .actionHomeFragmentToItemInfoFragment(itemInfo.janCode)
-                            )
+                        findNavController().navigate(
+                            HomeFragmentDirections
+                                .actionHomeFragmentToItemInfoFragment(itemInfo.janCode)
+                        )
                     }
                 }
             )
@@ -75,16 +69,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun scanCode() {
-        val options = ScanOptions()
-        options.captureActivity = MyCaptureActivity::class.java
+        val options = setScanOption()
+        barLauncher.launch(options)
+    }
 
+    private fun setScanOption(): ScanOptions {
+        val options = ScanOptions()
+
+        // アクティビティの指定
+        options.captureActivity = MyCaptureActivity::class.java
         // スキャン時にビープ音を鳴らす
         options.setBeepEnabled(true)
         // 13桁,8桁のJAN(EAN)コードのみスキャンする
-        options.setDesiredBarcodeFormats(ScanOptions.EAN_13,ScanOptions.EAN_8)
+        options.setDesiredBarcodeFormats(ScanOptions.EAN_13, ScanOptions.EAN_8)
         // スキャン画面下の説明
         options.setPrompt("赤い線をバーコードに合わせてください")
-        barLauncher.launch(options)
+
+        return options
     }
 
     private val barLauncher = registerForActivityResult(
@@ -92,16 +93,10 @@ class HomeFragment : Fragment() {
     ) { result: ScanIntentResult ->
         if (result.contents != null) {
             val janCode = result.contents
-            findNavController()
-                .navigate(
-                    HomeFragmentDirections
-                        .actionHomeFragmentToItemInfoFragment(janCode)
-                )
+            findNavController().navigate(
+                HomeFragmentDirections
+                    .actionHomeFragmentToItemInfoFragment(janCode)
+            )
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
