@@ -11,8 +11,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_fragment_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".home.HomeFragment">
 
         <TextView
@@ -21,6 +24,18 @@
             android:text="@string/home_title_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/search_by_jan_text"
+            style="@style/simple_text"
+            android:layout_marginStart="@dimen/small_margin"
+            android:autofillHints=""
+            android:hint="@string/search_by_jan_code"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:textColorHint="#55000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_title" />
 
         <ImageButton
             android:id="@+id/scan_button"
@@ -38,11 +53,10 @@
             android:id="@+id/item_list_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/small_margin"
             android:layout_marginBottom="@dimen/large_margin"
             app:layout_constraintBottom_toTopOf="@+id/scan_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_title" />
+            app:layout_constraintTop_toBottomOf="@+id/search_by_jan_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

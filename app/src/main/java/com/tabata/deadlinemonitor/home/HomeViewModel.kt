@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tabata.deadlinemonitor.database.ItemInfo
 import com.tabata.deadlinemonitor.database.ItemInfoDao
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class HomeViewModel(
     private val database: ItemInfoDao,
@@ -22,5 +23,13 @@ class HomeViewModel(
         viewModelScope.launch {
             _dataSet.value = database.getCheckItemList()
         }
+    }
+
+    fun isItemExist(janCode: String): Boolean {
+        var flag: Boolean
+        runBlocking {
+            flag = database.getItemInfo(janCode) != null
+        }
+        return flag
     }
 }

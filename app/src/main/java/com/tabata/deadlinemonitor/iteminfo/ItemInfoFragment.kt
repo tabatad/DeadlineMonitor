@@ -1,11 +1,13 @@
 package com.tabata.deadlinemonitor.iteminfo
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
@@ -21,8 +23,7 @@ import java.util.*
 
 class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPicker.OnValueChangeListener {
 
-    private var _binding: FragmentItemInfoBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentItemInfoBinding
 
     private val args: ItemInfoFragmentArgs by navArgs()
     private lateinit var itemInfoViewModel: ItemInfoViewModel
@@ -33,7 +34,7 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
     ): View {
 
         // binding設定
-        _binding = FragmentItemInfoBinding.inflate(inflater, container, false)
+        binding = FragmentItemInfoBinding.inflate(inflater, container, false)
 
         // DB, ViewModel, Lifecycle設定
         val application = requireNotNull(this.activity).application
@@ -167,7 +168,7 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
                         )
                 }
                 .setNegativeButton("キャンセル") { _, _ ->
-                    // Cancelを押したときの処理を書く
+                    // キャンセルを押したときの処理を書く
                 }
                 .show()
         }
@@ -179,6 +180,19 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
                         .actionItemInfoFragmentToHomeFragment()
                 )
         }
+
+        // レイアウトをタップするとフォーカスを要求
+        binding.itemInfoFragmentLayout.setOnClickListener {
+            it.requestFocus()
+        }
+
+        // EditTextからフォーカスが外れるとキーボードを非表示
+        binding.itemName.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                showoffKeyboard()
+            }
+        }
+
         return binding.root
     }
 
@@ -187,11 +201,6 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
         itemInfoViewModel.deadlineDate = calendar.time
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onValueChange(picker: NumberPicker?, old: Int, new: Int) {
@@ -210,5 +219,15 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
         val lastDayOfMonth = calendar.getActualMaximum(Calendar.DATE)   // 月末の日付を取得
         calendar.set(Calendar.DAY_OF_MONTH, lastDayOfMonth)
         itemInfoViewModel.deadlineDate = calendar.time
+    }
+
+    // キーボードを非表示にする
+    private fun showoffKeyboard() {
+        val inputMethodManager =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(
+            binding.itemInfoFragmentLayout.windowToken,
+            InputMethodManager.HIDE_NOT_ALWAYS
+        )
     }
 }
