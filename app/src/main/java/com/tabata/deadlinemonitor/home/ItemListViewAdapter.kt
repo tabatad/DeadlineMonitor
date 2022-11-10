@@ -37,7 +37,7 @@ class ItemListViewAdapter(private val dataSet: List<ItemInfo>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.text_row_item, viewGroup, false)
+            .inflate(R.layout.item_cell, viewGroup, false)
 
         return ViewHolder(view)
     }
