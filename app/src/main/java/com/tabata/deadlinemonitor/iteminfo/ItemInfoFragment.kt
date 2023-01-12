@@ -2,6 +2,7 @@ package com.tabata.deadlinemonitor.iteminfo
 
 import android.app.AlertDialog
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -77,6 +78,7 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
                     itemInfoViewModel.deadlineDate = calendar.time
                 }
                 binding.registerButton.text = "更新"
+                binding.deleteButton.visibility = View.VISIBLE
             } else {
                 // 年月のPickerの初期値設定
                 val calendar = Calendar.getInstance()
@@ -84,6 +86,7 @@ class ItemInfoFragment : Fragment(), DatePicker.OnDateChangedListener, NumberPic
                 binding.monthPicker.value = calendar.get(Calendar.MONTH) + 1
 
                 binding.registerButton.text = "登録"
+                binding.deleteButton.visibility = View.INVISIBLE
             }
         }
 
